@@ -17,7 +17,6 @@ for root, dirnames, filenames in os.walk(PATH):
 def index(path):
     if path and ".mp3" in path:
         return send_file(PATH + path)
-    global mp3s
     return render_template('index.html', mp3s=mp3s)
 
 if __name__ == "__main__":
