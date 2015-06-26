@@ -1,0 +1,87 @@
+<html>
+<head>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<style>
+div.filelist {
+    overflow-y: scroll;
+    height: 90%;
+}
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+
+var audio = document.createElement('audio');
+
+function playRandom() {
+    try {
+        var list = $('ul').find('li');
+        set_src($(list[Math.floor(Math.random()*list.length)]).find('a')[0].innerHTML);
+    } catch (err) {
+        playRandom();
+    }
+}
+
+function set_src(filename) {
+    window.location.hash = filename.replace(/ /g, "%20");
+    document.title = filename.replace(/%20/g, " ");
+    try {
+        audio.setAttribute('src', filename);
+        audio.load();
+        audio.play();
+        $('#np').html(filename.slice(0, -4));
+        return false;
+    } catch(err) {
+        location.reload();
+    }
+}
+
+function setVolume(volume) {
+    audio.volume = volume;
+}
+
+$(window).load(function() {
+    $("#volume").slider({
+        min: 0,
+        max: 100,
+        value: (audio.volume) * 100,
+        range: "min",
+        animate: true,
+        slide: function(event, ui) {
+            setVolume((ui.value) / 100);
+        }
+    });
+    audio.setAttribute('src', '');
+    audio.setAttribute('controls', 'controls');
+    audio.setAttribute('id', 'audio');
+    $('form').prepend(audio);
+    audio.load();
+    audio.addEventListener("ended", function () {
+        if (document.getElementById('autoplay').checked) {
+            playRandom();
+        }
+    });
+    if (window.location.hash != "" || window.location.hash != "#") {
+        set_src(window.location.hash.substring(1).replace(/%20/g, " "));
+    }
+});
+</script>
+</head>
+<body>
+<form onsubmit="return false;">
+    <input type="button" onclick="playRandom(); return false;" value="Random">
+    <label for="autoplay">Autoplay</label><input type="checkbox" name="autoplay" id="autoplay" checked>
+    <b><span id="np"></span></b>
+</form>
+<div id="volume" style="width: 25%"></div>
+<div class="filelist">
+<ul>
+{% for path in mp3s %}
+  <li><a href="{{ path }}" onClick='return set_src("{{ path }}");'>{{ path }}</a></li>
+{% else %}
+  No MP3s in designated directory
+{% endfor %}
+</ul>
+</div>
+</body>
+</html>
