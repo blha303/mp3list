@@ -21,4 +21,4 @@ def index(path):
     return render_template('index.html', mp3s=mp3s)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=56344)
+    app.run(port=56344)
