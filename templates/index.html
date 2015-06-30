@@ -78,6 +78,7 @@ $(window).load(function() {
 </form>
 <div id="volume" style="width: 25%"></div>
 <div class="filelist">
+<img src="folder.jpg" style="position:absolute;width:250px;height:250px;top:50px;right:50px" />
 <ul>
 {% for path in mp3s %}
   <li><a href="{{ path }}" onClick='return set_src("{{ path }}");'>{{ path }}</a></li>

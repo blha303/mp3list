@@ -17,6 +17,11 @@ for root, dirnames, filenames in os.walk(PATH):
 def index(path):
     if path and ".mp3" in path:
         return send_file(PATH + path)
+    if path == "folder.jpg":
+        try:
+            return send_file(PATH + "folder.jpg")
+        except:
+            return "", 404
     return render_template('index.html', mp3s=mp3s)
 
 if __name__ == "__main__":
