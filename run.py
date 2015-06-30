@@ -3,10 +3,15 @@ from flask import Flask, request, render_template, send_file
 import fnmatch
 import os
 
+from config import *
+
 app = Flask(__name__)
 app.use_x_sendfile = True
 
-PATH = "/home/sites/joco/"
+if not PATH[-1] in ["\\", "/"]:
+  print "Path should have a / (or \\) at the end. Fixing, but you should update the config file. You'll continue to see this warning until you do."
+  PATH = PATH + "/"
+
 mp3s = []
 for root, dirnames, filenames in os.walk(PATH):
   for filename in fnmatch.filter(filenames, '*.mp3'):

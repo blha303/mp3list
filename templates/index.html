@@ -12,6 +12,7 @@ div.filelist {
 <script>
 
 var audio = document.createElement('audio');
+var volume = localStorage.getItem('volume');
 
 function playRandom() {
     try {
@@ -36,11 +37,8 @@ function set_src(filename) {
     }
 }
 
-function setVolume(volume) {
-    audio.volume = volume;
-}
-
 $(window).load(function() {
+    if (volume) audio.volume = volume;
     $("#volume").slider({
         min: 0,
         max: 100,
@@ -48,7 +46,7 @@ $(window).load(function() {
         range: "min",
         animate: true,
         slide: function(event, ui) {
-            setVolume((ui.value) / 100);
+            audio.volume = (ui.value) / 100;
         }
     });
     audio.setAttribute('src', '');
@@ -56,11 +54,12 @@ $(window).load(function() {
     audio.setAttribute('id', 'audio');
     $('form').prepend(audio);
     audio.load();
-    audio.addEventListener("ended", function () {
+    audio.onended = function () {
         if (document.getElementById('autoplay').checked) {
             playRandom();
         }
-    });
+    };
+    audio.onvolumechange = function() { localStorage.setItem('volume', audio.volume); };
     if (window.location.hash != "" || window.location.hash != "#") {
         set_src(window.location.hash.substring(1).replace(/%20/g, " "));
     }
