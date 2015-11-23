@@ -28,7 +28,9 @@ I use Apache because nginx's x-sendfile support is awful.
 Setup
 -----
 
-Install `flask` from pypi using pip or easy_install or whatever. Edit run.py with the path to the files, the same one you put into the apache config above. `./run.py`
+Install `flask` from pypi using pip or easy\_install or whatever. Edit config.py[.sample] with the path to the files, the same one you put into the apache config above. `./run.py`
+
+Original implementation (PHP): https://gist.github.com/blha303/c769a6d0da207f2d3ac9
 
 [Issues](https://github.com/blha303/mp3list/issues)    
 [Questions](https://github.com/blha303/mp3list/issues)    
