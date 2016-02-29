@@ -1,3 +1,5 @@
-env/
-*.pyc
-config.py
+*
+!run.py
+!config.py.sample
+!templates/
+!README.md
