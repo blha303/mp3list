@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 from flask import Flask, request, render_template, send_file
 import fnmatch
 import os
@@ -9,7 +9,6 @@ app = Flask(__name__)
 app.use_x_sendfile = True
 
 if not PATH[-1] in ["\\", "/"]:
-  print "Path should have a / (or \\) at the end. Fixing, but you should update the config file. You'll continue to see this warning until you do."
   PATH = PATH + "/"
 
 mp3s = []
