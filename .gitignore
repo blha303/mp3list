@@ -2,4 +2,5 @@
 !run.py
 !config.py.sample
 !templates/
+!templates/index.html
 !README.md
