@@ -91,7 +91,8 @@ $(window).load(function() {
 <body>
 <form onsubmit="return false;">
     <span id="ghbutton"><a class="github-button" href="https://github.com/blha303/mp3list" data-icon="octicon-star" data-count-href="/blha303/mp3list/stargazers" data-count-api="/repos/blha303/mp3list#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star blha303/mp3list on GitHub">Star</a><script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script></span>
-    <input type="button" onclick="playRandom(true); return false;" value="Random">
+    <input type="button" onclick="playRandom(false); return false;" value="Next">
+    <input type="button" onclick="playRandom(true); return false;" value="Randomize">
     <label for="autoplay">Autoplay</label><input type="checkbox" name="autoplay" id="autoplay" checked>
     <b>
       <span id="np"></span>
