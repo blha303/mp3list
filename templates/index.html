@@ -33,16 +33,16 @@ function shuffle(array) {
 
 var audio = document.createElement('audio'),
     volume = localStorage.getItem('volume'),
-    list = shuffle($('ul').find('li'));
+    list;
 
-
-function playRandom(shuffle) {
-    if (shuffle) list = shuffle($('ul').find('li'));
+function playRandom(shuf) {
+    if (shuf) list = shuffle($('ul').find('li')).toArray();
     try {
         set_src($(list.pop()).find('a')[0].innerHTML);
-    } catch (err) {
-        playRandom(false);
+    } catch(err) {
+        playRandom(true);
     }
+    console.log("Remaining in playlist: " + list.length);
 }
 
 function set_src(filename) {
@@ -60,6 +60,7 @@ function set_src(filename) {
 }
 
 $(window).load(function() {
+    list = shuffle($('ul').find('li')).toArray();
     if (volume) audio.volume = volume;
     $("#volume").slider({
         min: 0,
@@ -92,7 +93,7 @@ $(window).load(function() {
 <form onsubmit="return false;">
     <span id="ghbutton"><a class="github-button" href="https://github.com/blha303/mp3list" data-icon="octicon-star" data-count-href="/blha303/mp3list/stargazers" data-count-api="/repos/blha303/mp3list#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star blha303/mp3list on GitHub">Star</a><script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script></span>
     <input type="button" onclick="playRandom(false); return false;" value="Next">
-    <input type="button" onclick="playRandom(true); return false;" value="Randomize">
+    <input type="button" onclick="playRandom(true); return false;" value="Random">
     <label for="autoplay">Autoplay</label><input type="checkbox" name="autoplay" id="autoplay" checked>
     <b>
       <span id="np"></span>
