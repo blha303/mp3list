@@ -11,14 +11,22 @@ app.use_x_sendfile = True
 if not PATH[-1] in ["\\", "/"]:
   PATH = PATH + "/"
 
-mp3s = []
-for root, dirnames, filenames in os.walk(PATH):
-  for filename in fnmatch.filter(filenames, '*.mp3'):
-    mp3s.append(os.path.join(root, filename).replace(PATH, ""))
+def update():
+    outp = []
+    for root, dirnames, filenames in os.walk(PATH):
+      for filename in fnmatch.filter(filenames, '*.mp3'):
+        outp.append(os.path.join(root, filename).replace(PATH, ""))
+    return sorted(outp)
+
+mp3s = update()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
+    if request.args.get("update", None):
+        global mp3s
+        mp3s = update()
+        return "", 204
     if path and ".mp3" in path:
         return send_file(PATH + path)
     if path == "folder.jpg":
